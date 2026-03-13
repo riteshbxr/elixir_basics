@@ -30,11 +30,12 @@ defmodule ElixirBasics.MixProject do
     [
       setup: ["deps.get"],
       check: ["dialyzer"],
-      start: ["collections"],
+      start: ["recursion_enum"],
       basics: ["run_lesson basics"],
       functions: ["run_lesson functions"],
       control_flow: ["run_lesson control_flow"],
-      collections: ["run_lesson collections"]
+      collections: ["run_lesson collections"],
+      recursion_enum: ["run_lesson recursion_enum"]
     ]
   end
 end
