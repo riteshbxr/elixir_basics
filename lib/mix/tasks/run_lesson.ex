@@ -8,5 +8,6 @@ defmodule Mix.Tasks.RunLesson do
   def run(["control_flow"]), do: ElixirBasics.Lessons.ControlFlow.run()
   def run(["collections"]), do: ElixirBasics.Lessons.Collections.run()
   def run(["recursion_enum"]), do: ElixirBasics.Lessons.RecursionEnum.run()
+  def run(["structs"]), do: ElixirBasics.Lessons.Structs.run()
   def run(_), do: Mix.shell().error("Unknown lesson. Available: functions")
 end
