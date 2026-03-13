@@ -30,10 +30,11 @@ defmodule ElixirBasics.MixProject do
     [
       setup: ["deps.get"],
       check: ["dialyzer"],
-      start: ["control_flow"],
+      start: ["collections"],
       basics: ["run_lesson basics"],
       functions: ["run_lesson functions"],
-      control_flow: ["run_lesson control_flow"]
+      control_flow: ["run_lesson control_flow"],
+      collections: ["run_lesson collections"]
     ]
   end
 end
