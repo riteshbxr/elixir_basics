@@ -11,5 +11,6 @@ defmodule Mix.Tasks.RunLesson do
   def run(["structs"]), do: ElixirBasics.Lessons.Structs.run()
   def run(["processes"]), do: ElixirBasics.Lessons.Processes.run()
   def run(["genserver"]), do: ElixirBasics.Lessons.GenServerLesson.run()
+  def run(["supervisor"]), do: ElixirBasics.Lessons.SupervisorLesson.run()
   def run(_), do: Mix.shell().error("Unknown lesson. Available: functions")
 end

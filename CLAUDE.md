@@ -146,11 +146,24 @@ New lessons need to be registered there AND as an alias in `mix.exs`.
 - `call` as synchronization barrier — drains mailbox, eliminates cast/send race conditions
 - `handle_cast` vs `handle_info`: cast = your API, info = external/system messages
 
+### Step 9 — Supervisor
+**File:** `lib/lessons/09_supervisor.ex` _(hand-typed)_
+**Modules:** `ElixirBasics.Lessons.SupervisorLesson`, `ElixirBasics.Lessons.Counter2`
+- `Supervisor.start_link/2` with a children list and strategy
+- Child spec: `{Module, init_arg}` — Supervisor calls `start_link` automatically
+- `Process.exit(pid, :kill)` — hard kill to trigger restart
+- `:one_for_one` — only crashed child restarts
+- `:one_for_all` — all children restart when one crashes
+- `:rest_for_one` — crashed child + all children defined after it restart
+- `Supervisor.stop/1` — clean teardown
+- Key insight: PID changes on restart, state resets to `init` value
+- Parameterised `strategyCheck/2` with crash candidate — elegant way to compare all strategies
+
 ## Upcoming Lessons
 
 | Step | Topic | File |
 |------|-------|------|
-| 9 | Supervisor | `lib/lessons/09_supervisor.ex` |
+| 10 | Tasks & async | `lib/lessons/10_tasks.ex` |
 
 ## Project Setup
 - Elixir ~> 1.19
