@@ -30,7 +30,7 @@ defmodule ElixirBasics.MixProject do
     [
       setup: ["deps.get"],
       check: ["dialyzer"],
-      start: ["supervisor"],
+      start: ["tasks"],
       basics: ["run_lesson basics"],
       functions: ["run_lesson functions"],
       control_flow: ["run_lesson control_flow"],
@@ -39,7 +39,8 @@ defmodule ElixirBasics.MixProject do
       structs: ["run_lesson structs"],
       processes: ["run_lesson processes"],
       genserver: ["run_lesson genserver"],
-      supervisor: ["run_lesson supervisor"]
+      supervisor: ["run_lesson supervisor"],
+      tasks: ["run_lesson tasks"]
     ]
   end
 end

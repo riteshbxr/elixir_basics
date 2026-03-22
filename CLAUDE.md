@@ -25,6 +25,7 @@ mix recursion_enum
 mix structs
 mix processes
 mix genserver
+mix tasks
 ```
 
 **Via custom Mix task directly:**
@@ -37,6 +38,7 @@ mix run_lesson recursion_enum
 mix run_lesson structs
 mix run_lesson processes
 mix run_lesson genserver
+mix run_lesson tasks
 ```
 
 **Via `mix run` (fallback):**
@@ -159,11 +161,22 @@ New lessons need to be registered there AND as an alias in `mix.exs`.
 - Key insight: PID changes on restart, state resets to `init` value
 - Parameterised `strategyCheck/2` with crash candidate — elegant way to compare all strategies
 
+### Step 10 — Tasks & Async
+**File:** `lib/lessons/10_tasks.ex` _(hand-typed)_
+**Module:** `ElixirBasics.Lessons.Tasks`
+- `Task.async` + `Task.await` — spawn a task, do other work, collect result
+- `Task.await_many` — fan-out: many tasks, collect all results in order within timeout
+- `Task.async_stream` — parallel map over a collection; results are `{:ok, val}` tuples
+- `try/rescue` inside task — isolate per-element failures without crashing the caller
+- `Task.yield` — non-crashing check: `{:ok, result}`, `nil` (timeout), or `{:exit, reason}`; use `Task.shutdown` to cancel
+- `Task.yield_many` — fan-in: collect what finishes within a time budget, cancel the rest
+- Key insight: `Task.async` **links** the task to the caller — exceptions propagate as exit signals and crash the parent; `try/rescue` inside the task is the idiomatic fix without a supervisor
+
 ## Upcoming Lessons
 
 | Step | Topic | File |
 |------|-------|------|
-| 10 | Tasks & async | `lib/lessons/10_tasks.ex` |
+| 11 | TBD | TBD |
 
 ## Project Setup
 - Elixir ~> 1.19
