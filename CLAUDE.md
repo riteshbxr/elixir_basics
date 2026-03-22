@@ -23,6 +23,8 @@ mix control_flow
 mix collections
 mix recursion_enum
 mix structs
+mix processes
+mix genserver
 ```
 
 **Via custom Mix task directly:**
@@ -33,6 +35,8 @@ mix run_lesson control_flow
 mix run_lesson collections
 mix run_lesson recursion_enum
 mix run_lesson structs
+mix run_lesson processes
+mix run_lesson genserver
 ```
 
 **Via `mix run` (fallback):**
@@ -118,12 +122,35 @@ New lessons need to be registered there AND as an alias in `mix.exs`.
 - Constructor convention: `def new(title, body)` inside the struct module
 - Structs reject unknown fields at **compile time** — unlike plain maps
 
+### Step 7 — Processes & Message Passing
+**File:** `lib/lessons/07_processes.ex` _(hand-typed)_
+**Module:** `ElixirBasics.Lessons.Processes`
+- `spawn/1` — create a process, get a PID
+- `self/0` — current process PID
+- `send/2` / `receive do` — message passing, pattern matching on messages
+- `receive` with `after` — timeout to avoid blocking forever
+- `spawn_link/1` — crash propagation between linked processes
+- `Process.monitor/1` — observe crashes via `{:DOWN, ...}` without dying
+- Recursive `loop/1` with accumulator — stateful long-lived process (foundation of GenServer)
+- Key insight: `receive` blocks; `after` prevents deadlock; linked processes are a supervision unit
+
+### Step 8 — GenServer
+**File:** `lib/lessons/08_gen_server.ex` _(hand-typed)_
+**Module:** `ElixirBasics.Lessons.GenServerLesson`
+- `use GenServer` + `init/1` — start with initial state
+- `handle_call/3` — synchronous request/reply, returns `{:reply, val, new_state}`
+- `handle_cast/2` — async fire-and-forget, returns `{:noreply, new_state}`
+- `handle_info/2` — catch-all for raw `send/2`, timers, monitor messages
+- `name: __MODULE__` — register by name, look up with `Process.whereis/1`
+- Client API pattern — public functions wrapping `GenServer.call/cast`
+- `call` as synchronization barrier — drains mailbox, eliminates cast/send race conditions
+- `handle_cast` vs `handle_info`: cast = your API, info = external/system messages
+
 ## Upcoming Lessons
 
 | Step | Topic | File |
 |------|-------|------|
-| 7 | Processes & message passing | `lib/lessons/07_processes.ex` |
-| 8 | GenServer basics | `lib/lessons/08_genserver.ex` |
+| 9 | Supervisor | `lib/lessons/09_supervisor.ex` |
 
 ## Project Setup
 - Elixir ~> 1.19

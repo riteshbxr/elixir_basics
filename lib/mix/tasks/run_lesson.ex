@@ -10,5 +10,6 @@ defmodule Mix.Tasks.RunLesson do
   def run(["recursion_enum"]), do: ElixirBasics.Lessons.RecursionEnum.run()
   def run(["structs"]), do: ElixirBasics.Lessons.Structs.run()
   def run(["processes"]), do: ElixirBasics.Lessons.Processes.run()
+  def run(["genserver"]), do: ElixirBasics.Lessons.GenServerLesson.run()
   def run(_), do: Mix.shell().error("Unknown lesson. Available: functions")
 end
