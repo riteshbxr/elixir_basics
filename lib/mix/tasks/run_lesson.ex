@@ -3,15 +3,24 @@ defmodule Mix.Tasks.RunLesson do
 
   @shortdoc "Runs a lesson module. Usage: mix run_lesson functions"
 
-  def run(["functions"]), do: ElixirBasics.Lessons.Functions.run()
-  def run(["basics"]), do: ElixirBasics.Lessons.Basics.run()
-  def run(["control_flow"]), do: ElixirBasics.Lessons.ControlFlow.run()
-  def run(["collections"]), do: ElixirBasics.Lessons.Collections.run()
-  def run(["recursion_enum"]), do: ElixirBasics.Lessons.RecursionEnum.run()
-  def run(["structs"]), do: ElixirBasics.Lessons.Structs.run()
-  def run(["processes"]), do: ElixirBasics.Lessons.Processes.run()
-  def run(["genserver"]), do: ElixirBasics.Lessons.GenServerLesson.run()
-  def run(["supervisor"]), do: ElixirBasics.Lessons.SupervisorLesson.run()
-  def run(["tasks"]), do: ElixirBasics.Lessons.Tasks.run()
-  def run(_), do: Mix.shell().error("Unknown lesson. Available: functions")
+  @impl Mix.Task
+  def run([x]) do
+    case x do
+      "functions" -> ElixirBasics.Lessons.Functions.run()
+      "basics" -> ElixirBasics.Lessons.Basics.run()
+      "control_flow" -> ElixirBasics.Lessons.ControlFlow.run()
+      "collections" -> ElixirBasics.Lessons.Collections.run()
+      "recursion_enum" -> ElixirBasics.Lessons.RecursionEnum.run()
+      "structs" -> ElixirBasics.Lessons.Structs.run()
+      "processes" -> ElixirBasics.Lessons.Processes.run()
+      "genserver" -> ElixirBasics.Lessons.GenServerLesson.run()
+      "supervisor" -> ElixirBasics.Lessons.SupervisorLesson.run()
+      "tasks" -> ElixirBasics.Lessons.Tasks.run()
+      "behaviours" -> ElixirBasics.Lessons.Behaviours.run()
+      "application_otp" ->
+        Mix.Task.run("app.start")
+        ElixirBasics.Lessons.ApplicationOtp.run()
+      _ -> Mix.shell().error("Unknown lesson. Available: basics, functions, control_flow, collections, recursion_enum, structs, processes, genserver, supervisor, tasks, behaviours, application_otp")
+    end
+  end
 end

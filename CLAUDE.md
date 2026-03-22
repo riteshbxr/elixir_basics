@@ -26,6 +26,8 @@ mix structs
 mix processes
 mix genserver
 mix tasks
+mix behaviours
+mix application_otp   # also: mix start
 ```
 
 **Via custom Mix task directly:**
@@ -39,6 +41,8 @@ mix run_lesson structs
 mix run_lesson processes
 mix run_lesson genserver
 mix run_lesson tasks
+mix run_lesson behaviours
+mix run_lesson application_otp
 ```
 
 **Via `mix run` (fallback):**
@@ -54,6 +58,7 @@ mix check        # run Dialyzer static analysis
 
 The task is defined in `lib/mix/tasks/run_lesson.ex`.
 New lessons need to be registered there AND as an alias in `mix.exs`.
+**Special case:** `application_otp` calls `Mix.Task.run("app.start")` before `run/0` — required because Mix tasks don't auto-start the OTP application.
 
 ## Completed Lessons
 
@@ -172,11 +177,38 @@ New lessons need to be registered there AND as an alias in `mix.exs`.
 - `Task.yield_many` — fan-in: collect what finishes within a time budget, cancel the rest
 - Key insight: `Task.async` **links** the task to the caller — exceptions propagate as exit signals and crash the parent; `try/rescue` inside the task is the idiomatic fix without a supervisor
 
+### Step 11 — Behaviours
+**File:** `lib/lessons/11_behaviours.ex` _(hand-typed)_
+**Module:** `ElixirBasics.Lessons.Behaviours`
+- `@callback` — declare required function signatures in a behaviour module
+- `@optional_callbacks` — mark callbacks as optional (implementors may skip them)
+- `@behaviour` — declare a module implements a behaviour
+- `@impl true` — annotate implementing functions (compile-time check)
+- `function_exported?/3` — runtime check for optional callback presence
+- Polymorphism via module as first-class value — pass `FormalGreeter` / `CasualGreeter` as args
+- Key insight: behaviours are Elixir's interface/protocol for modules (vs Protocols which dispatch on data type)
+
+### Step 12 — Application + Registry + DynamicSupervisor
+**File:** `lib/lessons/12_application_otp.ex` _(hand-typed)_
+**Module:** `ElixirBasics.Lessons.ApplicationOtp`
+- `use Application` + `start/2` — OTP application entry point, returns `{:ok, pid}`
+- `mod:` in `mix.exs` — tells OTP which module is the application callback
+- `Mix.Task.run("app.start")` — explicitly start the OTP app from a custom Mix task (Mix tasks don't auto-start it)
+- `Registry` with `keys: :unique` — named process registry, decouples PID from identity
+- `{:via, Registry, {MyApp.Registry, id}}` — dynamic process naming via Registry
+- `DynamicSupervisor` — start children at runtime (vs static `Supervisor` with fixed child list)
+- `DynamicSupervisor.start_child/2` — spawn a supervised child dynamically
+- `DynamicSupervisor.which_children/1` — inspect live children (ids are `:undefined` by default)
+- Key insight: `mod:` + `app.start` is the correct OTP lifecycle; `run/0` just uses the already-started tree
+
 ## Upcoming Lessons
 
 | Step | Topic | File |
 |------|-------|------|
-| 11 | TBD | TBD |
+| 13 | Protocols | `lib/lessons/13_protocols.ex` |
+| 14 | Ecto | `lib/lessons/14_ecto.ex` |
+| 15 | Streams | `lib/lessons/15_streams.ex` |
+| 16 | Macros & `use` | `lib/lessons/16_macros.ex` |
 
 ## Project Setup
 - Elixir ~> 1.19

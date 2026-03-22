@@ -2,6 +2,7 @@
 
 A hands-on, step-by-step Elixir learning project where **you type every line of code yourself** — no copy-pasting. Each lesson is a self-contained module covering one topic. The goal is to build real muscle memory alongside conceptual understanding.
 
+
 ## Philosophy
 
 - **You type everything.** Snippets are small (≤10 lines) so each one is approachable.
@@ -44,6 +45,12 @@ Each lesson lives in `lib/lessons/` as a standalone `.ex` file. Work through the
 | 8 | GenServer | `lib/lessons/08_gen_server.ex` | `mix genserver` |
 | 9 | Supervisors | `lib/lessons/09_supervisor.ex` | `mix supervisor` |
 | 10 | Tasks & Async | `lib/lessons/10_tasks.ex` | `mix tasks` |
+| 11 | Behaviours | `lib/lessons/11_behaviours.ex` | `mix behaviours` |
+| 12 | Application + Registry + DynamicSupervisor | `lib/lessons/12_application_otp.ex` | `mix application_otp` |
+| 13 | Protocols | `lib/lessons/13_protocols.ex` | `mix protocols` |
+| 14 | Ecto | `lib/lessons/14_ecto.ex` | `mix ecto_lesson` |
+| 15 | Streams | `lib/lessons/15_streams.ex` | `mix streams` |
+| 16 | Macros & `use` | `lib/lessons/16_macros.ex` | `mix macros` |
 
 ### Workflow for each lesson
 
@@ -105,7 +112,25 @@ Manual recursion with base + recursive cases. Tail recursion with accumulators f
 `Supervisor.start_link/2`, child specs, `:one_for_one`, `:one_for_all`, `:rest_for_one` strategies. How PIDs change on restart and how state resets.
 
 ### Step 10 — Tasks & Async
-`Task.async/await`, `Task.async_stream`, fire-and-forget with `Task.start`. Concurrency patterns for parallel work.
+`Task.async/await`, `Task.await_many`, `Task.async_stream` (parallel map over collections), `Task.yield` (non-crashing timeout check), `Task.yield_many` (fan-in: collect results within a time budget, cancel the rest). Key insight: `Task.async` links tasks to the caller — use `try/rescue` inside tasks to isolate failures.
+
+### Step 11 — Behaviours _(upcoming)_
+`@callback`, `@optional_callbacks`, `@impl`, `@behaviour`. Defining interface contracts and swapping implementations via config.
+
+### Step 12 — Application + Registry + DynamicSupervisor _(upcoming)_
+`use Application`, `start/2`, starting supervisor trees at boot. `Registry` for named process lookup. `DynamicSupervisor` for spawning workers at runtime.
+
+### Step 13 — Protocols _(upcoming)_
+`defprotocol`, `defimpl`, dispatching on type. Elixir's polymorphism without inheritance.
+
+### Step 14 — Ecto _(upcoming)_
+Schemas, changesets, validation, `Ecto.Query`, `Ecto.Multi` for atomic transactions.
+
+### Step 15 — Streams _(upcoming)_
+Lazy evaluation with `Stream.map/filter/unfold`. Composing infinite or large sequences without loading everything into memory.
+
+### Step 16 — Macros & `use` _(upcoming)_
+`defmacro`, `quote/unquote`, `__using__/1`. Building DSLs that bootstrap module boilerplate.
 
 ## Other Useful Commands
 

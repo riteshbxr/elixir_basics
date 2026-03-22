@@ -15,6 +15,7 @@ defmodule ElixirBasics.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
+      mod: {ElixirBasics.Lessons.ApplicationOtp.MyApp, []},
       extra_applications: [:logger]
     ]
   end
@@ -30,7 +31,7 @@ defmodule ElixirBasics.MixProject do
     [
       setup: ["deps.get"],
       check: ["dialyzer"],
-      start: ["tasks"],
+      start: ["application_otp"],
       basics: ["run_lesson basics"],
       functions: ["run_lesson functions"],
       control_flow: ["run_lesson control_flow"],
@@ -40,7 +41,9 @@ defmodule ElixirBasics.MixProject do
       processes: ["run_lesson processes"],
       genserver: ["run_lesson genserver"],
       supervisor: ["run_lesson supervisor"],
-      tasks: ["run_lesson tasks"]
+      tasks: ["run_lesson tasks"],
+      behaviours: ["run_lesson behaviours"],
+      application_otp: ["run_lesson application_otp"]
     ]
   end
 end
