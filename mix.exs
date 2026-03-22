@@ -31,7 +31,7 @@ defmodule ElixirBasics.MixProject do
     [
       setup: ["deps.get"],
       check: ["dialyzer"],
-      start: ["application_otp"],
+      start: ["protocols"],
       basics: ["run_lesson basics"],
       functions: ["run_lesson functions"],
       control_flow: ["run_lesson control_flow"],
@@ -43,7 +43,8 @@ defmodule ElixirBasics.MixProject do
       supervisor: ["run_lesson supervisor"],
       tasks: ["run_lesson tasks"],
       behaviours: ["run_lesson behaviours"],
-      application_otp: ["run_lesson application_otp"]
+      application_otp: ["run_lesson application_otp"],
+      protocols: ["run_lesson protocols"]
     ]
   end
 end

@@ -201,11 +201,23 @@ New lessons need to be registered there AND as an alias in `mix.exs`.
 - `DynamicSupervisor.which_children/1` — inspect live children (ids are `:undefined` by default)
 - Key insight: `mod:` + `app.start` is the correct OTP lifecycle; `run/0` just uses the already-started tree
 
+### Step 13 — Protocols
+**File:** `lib/lessons/13_protocols.ex` _(hand-typed)_
+**Module:** `ElixirBasics.Lessons.Protocols`
+- `defprotocol` — define a protocol with function signatures (no body)
+- `t()` in `@spec` — special type variable meaning "the implementing type"
+- `defimpl P, for: Type` — implement a protocol for a specific type
+- `for: BitString` — the underlying type for Elixir strings
+- `for: Color` (struct) — implement for your own struct
+- `@fallback_to_any true` + `defimpl P, for: Any` — graceful fallback for unimplemented types
+- `defimpl String.Chars, for: Color` — plug into Elixir's `#{}` interpolation
+- Key distinction: Protocols dispatch on **data type**; Behaviours dispatch on **module**
+
 ## Upcoming Lessons
 
 | Step | Topic | File |
 |------|-------|------|
-| 13 | Protocols | `lib/lessons/13_protocols.ex` |
+| 14 | Ecto | `lib/lessons/14_ecto.ex` |
 | 14 | Ecto | `lib/lessons/14_ecto.ex` |
 | 15 | Streams | `lib/lessons/15_streams.ex` |
 | 16 | Macros & `use` | `lib/lessons/16_macros.ex` |
@@ -226,4 +238,5 @@ New lessons need to be registered there AND as an alias in `mix.exs`.
 - User uses `inspect/1` and separators (`String.duplicate("--", N)`) for readable output
 
 ## Note to Agent
-- Keep updating tihs file after every Lesson
+- Keep updating this file after every Lesson
+- automatically add required changes for each lesson in mix.exs and run_lesson.ex after lesson 3

@@ -20,7 +20,8 @@ defmodule Mix.Tasks.RunLesson do
       "application_otp" ->
         Mix.Task.run("app.start")
         ElixirBasics.Lessons.ApplicationOtp.run()
-      _ -> Mix.shell().error("Unknown lesson. Available: basics, functions, control_flow, collections, recursion_enum, structs, processes, genserver, supervisor, tasks, behaviours, application_otp")
+      "protocols" -> ElixirBasics.Lessons.Protocols.run()
+      _ -> Mix.shell().error("Unknown lesson. Available: basics, functions, control_flow, collections, recursion_enum, structs, processes, genserver, supervisor, tasks, behaviours, application_otp, protocols")
     end
   end
 end
