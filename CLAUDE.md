@@ -213,11 +213,25 @@ New lessons need to be registered there AND as an alias in `mix.exs`.
 - `defimpl String.Chars, for: Color` — plug into Elixir's `#{}` interpolation
 - Key distinction: Protocols dispatch on **data type**; Behaviours dispatch on **module**
 
+### Step 14 — Ecto.Changeset
+**File:** `lib/lessons/14_ecto.ex` _(hand-typed)_
+**Module:** `ElixirBasics.Lessons.Ecto`
+- `use Ecto.Schema` + `embedded_schema` — typed struct without a DB table; auto-generates `:id` field
+- `import Ecto.Changeset` — brings `cast`, `validate_*` into scope
+- `cast(struct, params, allowed)` — pull allowed fields from a raw map, coerce types
+- `validate_required/2`, `validate_format/3`, `validate_number/3` — annotate changeset with errors
+- `changeset.valid?` — boolean; `changeset.errors` — keyword list of `{field, {msg, metadata}}`
+- `changeset.changes` — only the fields that differ from the original struct
+- `apply_action(changeset, :insert/:update)` — returns `{:ok, struct}` or `{:error, changeset}`
+- Changeset as diff — passing an existing struct as first arg tracks only what changed
+- `?` and `!` suffix convention: `?` = returns boolean, `!` = raises on error
+- Dep added: `{:ecto, "~> 3.11"}` (no DB adapter needed for embedded schemas)
+
 ## Upcoming Lessons
 
 | Step | Topic | File |
 |------|-------|------|
-| 14 | Ecto | `lib/lessons/14_ecto.ex` |
+| 15 | Streams | `lib/lessons/15_streams.ex` |
 | 14 | Ecto | `lib/lessons/14_ecto.ex` |
 | 15 | Streams | `lib/lessons/15_streams.ex` |
 | 16 | Macros & `use` | `lib/lessons/16_macros.ex` |

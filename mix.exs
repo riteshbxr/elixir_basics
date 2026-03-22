@@ -23,7 +23,8 @@ defmodule ElixirBasics.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:ecto, "~> 3.11"}
     ]
   end
 
@@ -31,7 +32,7 @@ defmodule ElixirBasics.MixProject do
     [
       setup: ["deps.get"],
       check: ["dialyzer"],
-      start: ["protocols"],
+      start: ["ecto"],
       basics: ["run_lesson basics"],
       functions: ["run_lesson functions"],
       control_flow: ["run_lesson control_flow"],
@@ -44,7 +45,8 @@ defmodule ElixirBasics.MixProject do
       tasks: ["run_lesson tasks"],
       behaviours: ["run_lesson behaviours"],
       application_otp: ["run_lesson application_otp"],
-      protocols: ["run_lesson protocols"]
+      protocols: ["run_lesson protocols"],
+      ecto: ["run_lesson ecto"]
     ]
   end
 end
