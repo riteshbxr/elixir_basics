@@ -130,9 +130,9 @@ Work through these in order. Each one builds on the last.
 | 14 | Ecto Changesets — validating and transforming data | `mix ecto` |
 | 15 | Ecto with SQLite — real database reads and writes | `mix ecto_sqlite` |
 | 16 | Error Handling — exceptions, rescue, and tagged tuples | `mix error_handling` |
-| 17 | Streams — lazy sequences for large or infinite data | `mix streams` |
-| 18 | Sigils — string and data literals | `mix sigils` |
-| 19 | Macros and `use` — metaprogramming and code generation | `mix macros` |
+| 17 | Streams — lazy sequences for large or infinite data | `mix streams` ✓ |
+| 18 | Sigils — string and data literals | `mix sigils` ✓ |
+| 19 | Macros and `use` — metaprogramming and code generation | `mix macros` ✓ |
 
 ---
 

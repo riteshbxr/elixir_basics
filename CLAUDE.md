@@ -25,9 +25,18 @@ mix recursion_enum
 mix structs
 mix processes
 mix genserver
+mix supervisor
 mix tasks
 mix behaviours
-mix application_otp   # also: mix start
+mix application_otp
+mix protocols
+mix ecto
+mix ecto_sqlite
+mix error_handling
+mix streams
+mix sigils
+mix macros
+mix inprogress   # runs 00_in_progress.ex (also: mix start)
 ```
 
 **Via custom Mix task directly:**
@@ -40,9 +49,18 @@ mix run_lesson recursion_enum
 mix run_lesson structs
 mix run_lesson processes
 mix run_lesson genserver
+mix run_lesson supervisor
 mix run_lesson tasks
 mix run_lesson behaviours
 mix run_lesson application_otp
+mix run_lesson protocols
+mix run_lesson ecto
+mix run_lesson ecto_sqlite
+mix run_lesson error_handling
+mix run_lesson streams
+mix run_lesson sigils
+mix run_lesson macros
+mix run_lesson inprogress
 ```
 
 **Via `mix run` (fallback):**
@@ -259,15 +277,57 @@ New lessons need to be registered there AND as an alias in `mix.exs`.
 - `!` (bang) vs non-bang functions — `!` raises on failure; non-bang returns a tagged tuple
 - Key insight: exceptions are for truly unexpected failures; normal sad paths belong in tagged tuples
 
+### Step 17 — Streams
+**File:** `lib/lessons/17_streams.ex` _(hand-typed)_
+**Module:** `ElixirBasics.Lessons.Streams`
+**Run:** `mix streams`
+- `Stream.map/filter/reject` — lazy equivalents of `Enum` operations; no execution until a terminal function forces it
+- `Stream.iterate(seed, fun)` — infinite sequence; each value derived from the previous
+- `Stream.unfold({state}, fun)` — stateful generation; fun returns `{emit, next_state}`; more powerful than `iterate`
+- `Stream.resource(open, next, close)` — wrap external resources (files, sockets); foundation of `File.stream!`
+- `File.stream!(path)` — lazy line-by-line file reading; idiomatic for large files; never loads whole file into memory
+- `Stream.chunk_every(n)` — batch elements into sublists of size n; `step` arg enables sliding window
+- `Stream.with_index(offset)` — pair elements with position; sugar over `Stream.zip`
+- `Stream.zip(a, b)` — pair two streams by position; stops when the shorter one ends; safe with infinite streams
+- `Stream.transform(acc, fun)` — stateful one-to-many; most general combinator; like `reduce + flat_map`
+- `Stream.flat_map(fun)` — stateless one-to-many expansion; simpler alternative to `transform`
+- Charlist gotcha: integer sublists like `[7,8,9]` display as `~c"\a\b\t"` — use `charlists: :as_lists` in inspect
+- Key rule: use Stream when data is large/infinite or you only need part of the result; Enum is fine for small in-memory collections
+
+### Step 18 — Sigils
+**File:** `lib/lessons/18_sigils.ex` _(hand-typed)_
+**Module:** `ElixirBasics.Lessons.Sigils`
+**Run:** `mix sigils`
+- `~r/.../` — compile a Regex literal at compile time; flags after delimiter: `i`=insensitive, `m`=multiline
+- `Regex.match?/2` — returns boolean; `Regex.scan/2` — returns all matches as list of lists
+- `Regex.named_captures/2` — named groups `(?<name>...)` return `%{"name" => "value"}` map
+- `~w[...]` — word list (list of strings); `a` modifier → atoms; `c` modifier → charlists
+- `~s(...)` — string sigil; supports `#{}` interpolation and `\t \n` escapes; useful when string contains quotes
+- `~D[...]`, `~T[...]`, `~N[...]` — Date, Time, NaiveDateTime structs; fields accessible via dot notation
+- Custom sigil: define `sigil_X(binary, modifiers)` — Elixir transforms `~X"..."` into that function call at compile time
+- Modifiers passed as charlist: `~l"..."a` → `sigil_l("...", [?a])`
+- Any paired delimiter works: `/ /` `( )` `[ ]` `{ }` `| |` — pick the one that avoids escaping
+- `"""` heredoc delimiter works with any sigil; useful for multiline content
+- Key rule: sigils are compile-time syntax sugar over a function call — no magic, just `sigil_X/2`
+
+### Step 19 — Macros & `use`
+**File:** `lib/lessons/19_macros.ex` _(hand-typed)_
+**Module:** `ElixirBasics.Lessons.Macros`
+**Run:** `mix macros`
+- `quote do` — freeze code as AST data; every expression is `{operator, metadata, arguments}`
+- `unquote(expr)` — inject a caller's value into a quoted AST; without it, the variable refers to the macro's own scope
+- `defmacro` — function that receives AST and must return AST; expands at compile time, zero runtime overhead
+- `defmacrop` — private macro; only usable within the defining module
+- `use Foo` — calls `Foo.__using__/1` and injects the returned AST into the calling module
+- `__using__(opts)` — the hook that `use` calls; opts is a keyword list of options passed after the module name
+- `@before_compile Foo` — registers `Foo.__before_compile__/1` to fire after the module body finishes compiling
+- Module attribute accumulation — `@routes` collects state across macro calls; `@before_compile` generates functions from it
+- `Macro.to_string/1` — convert AST back to readable source; runs at compile time inside a macro
+- Key insight: `def`, `defmodule`, `if`, `use GenServer` are all macros — no special compiler syntax, just `quote`/`unquote`
+
 ## Upcoming Lessons
 
-| Step | Topic | File |
-|------|-------|------|
-| 17 | Streams | `lib/lessons/17_streams.ex` |
-| 18 | Sigils | `lib/lessons/18_sigils.ex` |
-| 19 | Macros & `use` | `lib/lessons/19_macros.ex` |
-
-_Steps 1–16 complete. Next: Step 17 — Streams_
+_All 19 steps complete!_
 
 ## Project Setup
 - Elixir ~> 1.19
@@ -285,7 +345,17 @@ _Steps 1–16 complete. Next: Step 17 — Streams_
 - User uses `inspect/1` and separators (`String.duplicate("--", N)`) for readable output
 
 ## Note to Agent
-- Keep updating this file CLAUDE.md and README.md after every Lesson
-- Automatically add required changes for each lesson only at start of the lesson in mix.exs and run_lesson.ex
-- Remind the steps shared in README.md before starting a new lesson
-- Always share corrections and do not make changes automatically, Let the user type or copy paste it
+
+### What Claude does automatically (no need to ask the user):
+- Update `mix.exs` and `run_lesson.ex` at the **start** of each new lesson
+- Add explanatory comments to the lesson file at the **end** of each lesson
+- Update `CLAUDE.md` (Completed Lessons + Upcoming table) at the **end** of each lesson
+- Update `README.md` lesson table at the **end** of each lesson
+- Update memory (MEMORY.md) progress at the **end** of each lesson
+
+### What the user does (Claude never does this for them):
+- Type every code snippet into the lesson file — builds muscle memory
+- Copy corrections shown by Claude — never silently auto-fixed
+
+### Correction workflow:
+- If the user's code has an error, show the corrected line(s) and explain why — do NOT silently edit the file

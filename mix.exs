@@ -50,7 +50,10 @@ defmodule ElixirBasics.MixProject do
       ecto: ["run_lesson ecto"],
       ecto_sqlite: ["run_lesson ecto_sqlite"],
       inprogress: ["run_lesson inprogress"],
-      error_handling: ["run_lesson error_handling"]
+      error_handling: ["run_lesson error_handling"],
+      streams: ["run_lesson streams"],
+      sigils: ["run_lesson sigils"],
+      macros: ["run_lesson macros"],
     ]
   end
 end
