@@ -227,14 +227,47 @@ New lessons need to be registered there AND as an alias in `mix.exs`.
 - `?` and `!` suffix convention: `?` = returns boolean, `!` = raises on error
 - Dep added: `{:ecto, "~> 3.11"}` (no DB adapter needed for embedded schemas)
 
+### Step 15 — Ecto with SQLite
+**File:** `lib/lessons/15_ecto_sqlite.ex` _(hand-typed)_
+**Module:** `ElixirBasics.Lessons.EctoSQLite`
+**Run:** `mix ecto_sqlite`
+**Dep added:** `{:ecto_sqlite3, "~> 0.15"}`
+- `defmodule Repo` with `use Ecto.Repo, otp_app:, adapter: Ecto.Adapters.SQLite3`
+- `schema "users"` with typed fields + `timestamps()` — real DB table (vs `embedded_schema`)
+- `changeset/2` with `cast`, `validate_required`, `validate_format`
+- `defmodule Migration0` with `use Ecto.Migration` + `create table(:users)`
+- `Ecto.Migrator.run(Repo, [{0, Migration0}], :up, all: true)` — inline migration
+- `Repo.start_link(database: ":memory:", pool_size: 1)` — `pool_size: 1` required for in-memory SQLite (each connection gets its own DB)
+- `Repo.insert!/1` — takes a changeset, returns persisted struct with id + timestamps
+- `import Ecto.Query` + `from u in User, where: u.age >= 18` — composable query DSL
+- `Repo.all/1`, `Repo.get/2` — fetch many or one by PK
+- `Repo.update!/1` — diffs changeset, sends minimal SQL SET
+- `Repo.delete!/1` — deletes by PK
+- Key insight: `Repo.all(User)` (no query) is shorthand for `Repo.all(from u in User)`
+
+### Step 16 — Error Handling
+**File:** `lib/lessons/16_error_handling.ex` _(hand-typed)_
+**Module:** `ElixirBasics.Lessons.ErrorHandling`
+**Run:** `mix error_handling`
+- `{:ok, val}` / `{:error, reason}` tagged tuples — the idiomatic Elixir approach; model failures as data
+- `try/rescue` — catch runtime exceptions; `try` is an expression, returns a value
+- `e in ExceptionType` — match specific exception types in `rescue`
+- `Exception.message/1` — universal way to get a readable string from any exception
+- `try/after` — cleanup block that runs unconditionally; doesn't affect return value
+- `raise/1` + `defexception` — define typed custom exceptions with default `message:`
+- `throw/catch` — non-local escape hatch for early exit from deep nesting; rare in practice
+- `!` (bang) vs non-bang functions — `!` raises on failure; non-bang returns a tagged tuple
+- Key insight: exceptions are for truly unexpected failures; normal sad paths belong in tagged tuples
+
 ## Upcoming Lessons
 
 | Step | Topic | File |
 |------|-------|------|
-| 15 | Streams | `lib/lessons/15_streams.ex` |
-| 14 | Ecto | `lib/lessons/14_ecto.ex` |
-| 15 | Streams | `lib/lessons/15_streams.ex` |
-| 16 | Macros & `use` | `lib/lessons/16_macros.ex` |
+| 17 | Streams | `lib/lessons/17_streams.ex` |
+| 18 | Sigils | `lib/lessons/18_sigils.ex` |
+| 19 | Macros & `use` | `lib/lessons/19_macros.ex` |
+
+_Steps 1–16 complete. Next: Step 17 — Streams_
 
 ## Project Setup
 - Elixir ~> 1.19
@@ -252,5 +285,7 @@ New lessons need to be registered there AND as an alias in `mix.exs`.
 - User uses `inspect/1` and separators (`String.duplicate("--", N)`) for readable output
 
 ## Note to Agent
-- Keep updating this file after every Lesson
-- automatically add required changes for each lesson in mix.exs and run_lesson.ex after lesson 3
+- Keep updating this file CLAUDE.md and README.md after every Lesson
+- Automatically add required changes for each lesson only at start of the lesson in mix.exs and run_lesson.ex
+- Remind the steps shared in README.md before starting a new lesson
+- Always share corrections and do not make changes automatically, Let the user type or copy paste it

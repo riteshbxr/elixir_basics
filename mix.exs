@@ -24,7 +24,8 @@ defmodule ElixirBasics.MixProject do
   defp deps do
     [
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:ecto, "~> 3.11"}
+      {:ecto, "~> 3.11"},
+      {:ecto_sqlite3, "~> 0.15"}
     ]
   end
 
@@ -47,7 +48,9 @@ defmodule ElixirBasics.MixProject do
       application_otp: ["run_lesson application_otp"],
       protocols: ["run_lesson protocols"],
       ecto: ["run_lesson ecto"],
-      inprogress: ["run_lesson inprogress"]
+      ecto_sqlite: ["run_lesson ecto_sqlite"],
+      inprogress: ["run_lesson inprogress"],
+      error_handling: ["run_lesson error_handling"]
     ]
   end
 end

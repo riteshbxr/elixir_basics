@@ -23,7 +23,11 @@ defmodule Mix.Tasks.RunLesson do
         ElixirBasics.Lessons.ApplicationOtp.run()
       "protocols" -> ElixirBasics.Lessons.Protocols.run()
       "ecto" -> ElixirBasics.Lessons.Ecto.run()
-      _ -> Mix.shell().error("Unknown lesson. Available: basics, functions, control_flow, collections, recursion_enum, structs, processes, genserver, supervisor, tasks, behaviours, application_otp, protocols, ecto")
+      "ecto_sqlite" ->
+        Mix.Task.run("app.start")
+        ElixirBasics.Lessons.EctoSQLite.run()
+      "error_handling" -> ElixirBasics.Lessons.ErrorHandling.run()
+      _ -> Mix.shell().error("Unknown lesson. Available: basics, functions, control_flow, collections, recursion_enum, structs, processes, genserver, supervisor, tasks, behaviours, application_otp, protocols, ecto, ecto_sqlite, error_handling")
     end
   end
 end

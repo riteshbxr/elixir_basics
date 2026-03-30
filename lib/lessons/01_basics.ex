@@ -11,7 +11,7 @@ defmodule ElixirBasics.Lessons.Basics do
     IO.puts("\n=== 1. Basic Types ===")
 
     # Integers and floats
-    age = 30
+    age = 40
     pi = 3.14
     IO.puts("Integer: #{age}")
     IO.puts("Float: #{pi}")
@@ -31,7 +31,8 @@ defmodule ElixirBasics.Lessons.Basics do
     IO.puts("\n=== 2. Immutability ===")
     # Variables are immutable — rebinding creates a new binding
     x = 10
-    x = x + 5  # This rebinds x, not mutation
+    # This rebinds x, not mutation
+    x = x + 5
     IO.puts("x after rebind: #{x}")
 
     IO.puts("\n=== 3. Pattern Matching ===")
@@ -54,7 +55,8 @@ defmodule ElixirBasics.Lessons.Basics do
     # Use ^ to match against an existing variable's value
     expected = :ok
     result = :ok
-    ^expected = result  # This would raise if result != :ok
+    # This would raise if result != :ok
+    ^expected = result
     IO.puts("Pin match succeeded — result was :ok")
 
     :done

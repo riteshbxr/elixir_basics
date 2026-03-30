@@ -127,9 +127,12 @@ Work through these in order. Each one builds on the last.
 | 11 | Behaviours — defining contracts between modules | `mix behaviours` |
 | 12 | Application, Registry, and DynamicSupervisor | `mix application_otp` |
 | 13 | Protocols — polymorphism based on data type | `mix protocols` |
-| 14 | Ecto — validating and transforming data with changesets | `mix ecto_lesson` |
-| 15 | Streams — lazy sequences for large or infinite data | `mix streams` |
-| 16 | Macros and `use` — metaprogramming and code generation | `mix macros` |
+| 14 | Ecto Changesets — validating and transforming data | `mix ecto` |
+| 15 | Ecto with SQLite — real database reads and writes | `mix ecto_sqlite` |
+| 16 | Error Handling — exceptions, rescue, and tagged tuples | `mix error_handling` |
+| 17 | Streams — lazy sequences for large or infinite data | `mix streams` |
+| 18 | Sigils — string and data literals | `mix sigils` |
+| 19 | Macros and `use` — metaprogramming and code generation | `mix macros` |
 
 ---
 
@@ -201,11 +204,23 @@ Protocols are Elixir's other form of polymorphism. Where Behaviours dispatch bas
 
 Ecto is Elixir's data mapping and query library. Even if you're not using a database, its changeset system is the standard way to validate and transform incoming data — from a web form, an API, or anywhere else. You'll define a schema, cast raw input through it, and get back either a valid struct or a detailed list of errors.
 
-### Step 15 — Streams
+### Step 15 — Ecto with SQLite
+
+Taking Ecto to a real database. You'll define a schema backed by an actual SQLite table, run an inline migration to create it, and then insert, query, update, and delete records using `Repo`. This is the full CRUD cycle — the foundation for working with any database in Elixir.
+
+### Step 16 — Error Handling
+
+Elixir has two parallel systems for dealing with failure. The idiomatic approach is returning `{:ok, value}` or `{:error, reason}` tuples and pattern matching on them — failures are just data. For the times you're calling code that raises, there's `try/rescue` to catch exceptions, `try/after` for guaranteed cleanup, and `defexception` to define your own typed errors. You'll also learn the `!` (bang) convention — when a function name ends with `!`, it raises on failure instead of returning a tuple.
+
+### Step 17 — Streams
 
 `Enum` loads everything into memory at once. `Stream` is the lazy alternative — it only processes each element when you actually ask for it. This makes it possible to work with very large files, infinite sequences, or pipelines where you want to compose transformations without paying for them upfront.
 
-### Step 16 — Macros & `use`
+### Step 18 — Sigils
+
+Sigils are Elixir's shorthand notation for creating values from strings — things like `~r/regex/`, `~w[word list]`, `~D[2024-01-15]` for dates, and `~s{string with #{interpolation}}`. You'll learn the built-in sigils and how to define your own custom one.
+
+### Step 19 — Macros & `use`
 
 Macros let you write code that generates code. They're how `use GenServer`, `use Phoenix.Controller`, and similar constructs work — they inject boilerplate into your module at compile time. This lesson lifts the lid on that mechanism so you understand what's happening when you type `use SomeModule`.
 
