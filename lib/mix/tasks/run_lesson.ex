@@ -6,6 +6,7 @@ defmodule Mix.Tasks.RunLesson do
   @impl Mix.Task
   def run([x]) do
     case x do
+      "inprogress" -> ElixirBasics.Lessons.InProgress.run()
       "functions" -> ElixirBasics.Lessons.Functions.run()
       "basics" -> ElixirBasics.Lessons.Basics.run()
       "control_flow" -> ElixirBasics.Lessons.ControlFlow.run()

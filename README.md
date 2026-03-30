@@ -1,158 +1,250 @@
-# Elixir Basics — Interactive Learning Tutorial
+# Learning Elixir — Step by Step
 
-A hands-on, step-by-step Elixir learning project where **you type every line of code yourself** — no copy-pasting. Each lesson is a self-contained module covering one topic. The goal is to build real muscle memory alongside conceptual understanding.
+This is a hands-on Elixir learning project. Each lesson introduces one concept, gives you a small code snippet to type out yourself, and lets you run it immediately to see what happens.
 
+No copy-pasting. No reading a wall of theory before writing a line of code. Just type, run, understand, repeat.
 
-## Philosophy
+---
 
-- **You type everything.** Snippets are small (≤10 lines) so each one is approachable.
-- **One concept at a time.** No lesson tries to cover everything at once.
-- **Run and verify immediately.** After each snippet, run the lesson and see output.
-- **Go beyond.** Once you understand the snippet, experiment freely.
+## What is Elixir?
 
-## Prerequisites
+Elixir is a programming language designed for building systems that need to be **fast, reliable, and handle lots of things happening at the same time** — think chat apps, payment processors, real-time dashboards. It runs on the Erlang virtual machine, which has been used in telecoms infrastructure for 30+ years because it almost never crashes.
 
-- [Elixir](https://elixir-lang.org/install.html) ~> 1.19
-- [Mix](https://hexdocs.pm/mix/Mix.html) (bundled with Elixir)
+Elixir is also quite pleasant to write. It has clean syntax, a powerful standard library, and a way of thinking about code that feels very different from languages like Python or JavaScript — in a good way.
+
+If you've never written Elixir before, you're in the right place.
+
+---
+
+## Before You Start
+
+You need two things installed:
+
+### 1. Elixir
+
+Go to [https://elixir-lang.org/install.html](https://elixir-lang.org/install.html) and follow the instructions for your operating system.
+
+Once installed, check it worked by opening a terminal and running:
 
 ```bash
-# Verify your install
 elixir --version
+```
+
+You should see something like `Elixir 1.19.x`. If you get an error, Elixir isn't installed correctly yet.
+
+### 2. Mix (comes free with Elixir)
+
+Mix is Elixir's built-in tool for running code, managing dependencies, and doing project tasks. You don't install it separately — it comes with Elixir.
+
+Check it's there:
+
+```bash
 mix --version
 ```
 
-## Setup
+---
+
+## Getting the Project
 
 ```bash
 git clone git@github.com:riteshbxr/elixir_basics.git
 cd elixir_basics
-mix setup        # install dependencies
+mix setup
 ```
 
-## How to Work Through the Lessons
+`mix setup` downloads the small number of libraries this project uses. You only need to do this once.
 
-Each lesson lives in `lib/lessons/` as a standalone `.ex` file. Work through them in order:
+---
 
-| Step | Topic | File | Run with |
-|------|-------|------|----------|
-| 1 | Basic Types & Pattern Matching | `lib/lessons/01_basics.ex` | `mix basics` |
-| 2 | Functions, Modules & Pipe Operator | `lib/lessons/02_functions.ex` | `mix functions` |
-| 3 | Control Flow | `lib/lessons/03_control_flow.ex` | `mix control_flow` |
-| 4 | Collections | `lib/lessons/04_collections.ex` | `mix collections` |
-| 5 | Recursion & Enum | `lib/lessons/05_recursion_enum.ex` | `mix recursion_enum` |
-| 6 | Structs | `lib/lessons/06_structs.ex` | `mix structs` |
-| 7 | Processes & Message Passing | `lib/lessons/07_processes.ex` | `mix processes` |
-| 8 | GenServer | `lib/lessons/08_gen_server.ex` | `mix genserver` |
-| 9 | Supervisors | `lib/lessons/09_supervisor.ex` | `mix supervisor` |
-| 10 | Tasks & Async | `lib/lessons/10_tasks.ex` | `mix tasks` |
-| 11 | Behaviours | `lib/lessons/11_behaviours.ex` | `mix behaviours` |
-| 12 | Application + Registry + DynamicSupervisor | `lib/lessons/12_application_otp.ex` | `mix application_otp` |
-| 13 | Protocols | `lib/lessons/13_protocols.ex` | `mix protocols` |
-| 14 | Ecto | `lib/lessons/14_ecto.ex` | `mix ecto_lesson` |
-| 15 | Streams | `lib/lessons/15_streams.ex` | `mix streams` |
-| 16 | Macros & `use` | `lib/lessons/16_macros.ex` | `mix macros` |
+## How This Works
 
-### Workflow for each lesson
+Each lesson is a single file inside `lib/lessons/`. You open it, read the explanation at the top, type out the code snippet, and then run it with a short command.
 
-1. **Open** the lesson file (or create it fresh if it doesn't exist yet).
-2. **Read** the concept at the top — understand what you're about to type.
-3. **Type** the code snippet by hand into the file.
-4. **Run** it with the `mix` alias for that lesson (e.g. `mix functions`).
-5. **Experiment** — change values, break things, add your own functions.
-6. Repeat for the next snippet in the lesson.
+### Setting up your workspace
 
-## Running Lessons
+Before starting a lesson, do this once:
+
+**Step 1 — Copy the lesson file to a working file**
 
 ```bash
-# Short form (recommended)
-mix basics
-mix functions
-mix control_flow
-mix collections
-mix recursion_enum
-mix structs
-mix processes
-mix genserver
-mix supervisor
-mix tasks
-
-# Or via the custom Mix task
-mix run_lesson basics
-mix run_lesson functions
-# ... etc.
+# Example: starting lesson 2
+cp lib/lessons/02_functions.ex lib/lessons/00_inprogress.ex
 ```
 
-## What Each Lesson Covers
+`00_inprogress.ex` is your personal scratchpad for the lesson. The original lesson file stays untouched as your reference.
+
+**Step 2 — Clear out the code in `00_inprogress.ex`**
+
+Open `00_inprogress.ex` and delete everything inside the module body — keep only the module shell:
+
+```elixir
+defmodule ElixirBasics.Lessons.Functions do
+  # you'll type the lesson code here
+end
+```
+
+**Step 3 — Open both files side by side**
+
+In VS Code: right-click `00_inprogress.ex` in the Explorer and choose **"Open to the Side"**. You'll have the original lesson on the right as a reference, and your blank working file on the left to type into.
+
+> On a Mac you can also drag a tab to the side of the editor to split the view.
+
+### The workflow for every lesson
+
+1. Reference the original lesson file on the right
+2. Read the next snippet and the comment explaining it — understand what it's doing before you type
+3. Type it into `00_inprogress.ex` on the left. Typing (not pasting) gives your brain time to process each line
+4. Run the lesson's `mix` command in the terminal to see the output
+
+   ```bash
+   mix functions   # swap 'functions' for whichever lesson you're on
+   ```
+
+5. Read the output. Does it match what you expected?
+6. If something is unclear — change a value, rename a variable, delete a line. Breaking things deliberately is one of the fastest ways to understand them.
+7. Once a snippet clicks, move on to the next one in the lesson.
+
+> **On copy-pasting:** If you've genuinely understood a snippet and just want to move past it, pasting is fine. But default to typing — the few extra minutes pay off every time you write Elixir later.
+
+---
+
+## The Lessons
+
+Work through these in order. Each one builds on the last.
+
+| Step | What You'll Learn | Run Command |
+|------|-------------------|-------------|
+| 1 | Basic types, variables, and the `=` operator (it's not what you think) | `mix basics` |
+| 2 | Writing functions, modules, and the pipe operator | `mix functions` |
+| 3 | Making decisions: if, cond, case, and with | `mix control_flow` |
+| 4 | Lists, maps, tuples, and when to use each | `mix collections` |
+| 5 | Recursion and working with lists using Enum | `mix recursion_enum` |
+| 6 | Structs — Elixir's typed data shapes | `mix structs` |
+| 7 | Processes and message passing — how Elixir handles concurrency | `mix processes` |
+| 8 | GenServer — the standard way to build stateful processes | `mix genserver` |
+| 9 | Supervisors — making your processes restart when they crash | `mix supervisor` |
+| 10 | Tasks — running things in parallel and collecting results | `mix tasks` |
+| 11 | Behaviours — defining contracts between modules | `mix behaviours` |
+| 12 | Application, Registry, and DynamicSupervisor | `mix application_otp` |
+| 13 | Protocols — polymorphism based on data type | `mix protocols` |
+| 14 | Ecto — validating and transforming data with changesets | `mix ecto_lesson` |
+| 15 | Streams — lazy sequences for large or infinite data | `mix streams` |
+| 16 | Macros and `use` — metaprogramming and code generation | `mix macros` |
+
+---
+
+## What You'll Learn in Each Lesson
 
 ### Step 1 — Basic Types & Pattern Matching
-Integers, floats, atoms, strings, booleans. The `=` match operator (not assignment!), `[head | tail]` list matching, `_` wildcard, `^` pin operator.
 
-### Step 2 — Functions, Modules & Pipe Operator
-Named functions with `def`, multi-clause pattern matching, default args, guard clauses, `@spec` typespecs. Anonymous functions (`fn`), capture shorthand (`&`), and the pipe operator `|>`.
+Elixir has the usual types: integers, floats, strings, booleans. But `=` doesn't mean "assign" — it means "match". This small shift in thinking is one of the most powerful ideas in the language.
+
+You'll also learn how to pull apart a list with `[head | tail]` and how the `^` pin operator lets you check a value rather than rebind it.
+
+### Step 2 — Functions, Modules & the Pipe Operator
+
+Functions in Elixir are grouped inside modules. You can define the same function multiple times with different patterns — Elixir picks the right one at runtime. You'll also meet the pipe operator `|>`, which lets you chain function calls left to right instead of nesting them inside each other.
 
 ### Step 3 — Control Flow
-`if`, `cond`, `case`, and `with`. Returning tagged tuples `{:ok, val}` / `{:error, reason}`. Know when to use each: `if`=one condition, `cond`=many conditions, `case`=one value many shapes, `with`=chain of fallible steps.
+
+Four tools for making decisions:
+- `if` — when there's one condition
+- `cond` — when there are several conditions to check
+- `case` — when you want to match on the shape of a value
+- `with` — when you're chaining steps that might fail, and want clean error handling
 
 ### Step 4 — Collections
-Lists, tuples, maps, and keyword lists. When to use each. Partial map pattern matching, `Map.put/delete`, `Keyword.get_values/2`.
+
+Elixir's four main data containers, when to use each, and how to read and update them:
+- **List** — an ordered sequence of things
+- **Tuple** — a fixed-size group (often used to signal success/failure)
+- **Map** — key-value pairs, like a dictionary
+- **Keyword list** — an ordered list of key-value pairs, typically used for options
 
 ### Step 5 — Recursion & Enum
-Manual recursion with base + recursive cases. Tail recursion with accumulators for stack safety. `Enum.map`, `Enum.filter`, `Enum.reduce`, `Enum.take/drop`.
+
+Elixir has no loops. Instead you use recursion (a function that calls itself) or the `Enum` module, which gives you `map`, `filter`, `reduce`, and more. You'll write both — first by hand to understand how it works, then using `Enum` the way you'd do it day to day.
 
 ### Step 6 — Structs
-`defstruct` with defaults, `@enforce_keys`, pattern matching on struct fields, binding the whole struct in a function argument. Constructor convention with `new/2`.
+
+A struct is like a map but with a fixed set of keys that are checked at compile time. You define the shape of your data once and Elixir enforces it. Great for modelling domain objects like `User`, `Order`, or `Product`.
 
 ### Step 7 — Processes & Message Passing
-`spawn`, `self`, `send`/`receive`, `after` timeout, `spawn_link`, `Process.monitor`. Building a stateful long-lived process with a recursive loop — the manual precursor to GenServer.
+
+This is where Elixir starts to feel very different. Instead of threads sharing memory, Elixir runs thousands of lightweight processes that communicate by sending each other messages. You'll `spawn` a process, `send` it a message, and `receive` a reply. This lesson is the foundation for everything that comes after.
 
 ### Step 8 — GenServer
-`use GenServer`, `init/1`, `handle_call/3` (sync), `handle_cast/2` (async), `handle_info/2` (raw messages). Named registration, the client API pattern, using `call` as a synchronization barrier.
+
+GenServer ("generic server") is Elixir's standard building block for a process that holds state and responds to messages. It's what you reach for whenever you need something running in the background keeping track of data. You'll build a simple counter, then a slightly more interesting one.
 
 ### Step 9 — Supervisors
-`Supervisor.start_link/2`, child specs, `:one_for_one`, `:one_for_all`, `:rest_for_one` strategies. How PIDs change on restart and how state resets.
+
+Processes crash. In most systems that's a problem. In Elixir, it's a strategy. A Supervisor watches your processes and restarts them when they die. You'll explore three restart strategies — `:one_for_one`, `:one_for_all`, and `:rest_for_one` — and see exactly how each one behaves.
 
 ### Step 10 — Tasks & Async
-`Task.async/await`, `Task.await_many`, `Task.async_stream` (parallel map over collections), `Task.yield` (non-crashing timeout check), `Task.yield_many` (fan-in: collect results within a time budget, cancel the rest). Key insight: `Task.async` links tasks to the caller — use `try/rescue` inside tasks to isolate failures.
 
-### Step 11 — Behaviours _(upcoming)_
-`@callback`, `@optional_callbacks`, `@impl`, `@behaviour`. Defining interface contracts and swapping implementations via config.
+When you need to do several slow things at once (network calls, file reads, heavy computation), `Task` is the tool. You'll fan out work across multiple processes, collect results when they're ready, and learn how to handle partial failures without crashing everything.
 
-### Step 12 — Application + Registry + DynamicSupervisor _(upcoming)_
-`use Application`, `start/2`, starting supervisor trees at boot. `Registry` for named process lookup. `DynamicSupervisor` for spawning workers at runtime.
+### Step 11 — Behaviours
 
-### Step 13 — Protocols _(upcoming)_
-`defprotocol`, `defimpl`, dispatching on type. Elixir's polymorphism without inheritance.
+Behaviours let you define a contract — a list of functions that any implementing module must provide. Think of it like an interface in other languages. You'll define a behaviour and write two different modules that implement it, then call them interchangeably.
 
-### Step 14 — Ecto _(upcoming)_
-Schemas, changesets, validation, `Ecto.Query`, `Ecto.Multi` for atomic transactions.
+### Step 12 — Application + Registry + DynamicSupervisor
 
-### Step 15 — Streams _(upcoming)_
-Lazy evaluation with `Stream.map/filter/unfold`. Composing infinite or large sequences without loading everything into memory.
+By this point you know the individual pieces. This lesson puts them together the way a real OTP application is structured: an Application that starts a supervision tree at boot, a Registry that lets processes find each other by name, and a DynamicSupervisor that starts new workers on demand at runtime.
 
-### Step 16 — Macros & `use` _(upcoming)_
-`defmacro`, `quote/unquote`, `__using__/1`. Building DSLs that bootstrap module boilerplate.
+### Step 13 — Protocols
 
-## Other Useful Commands
+Protocols are Elixir's other form of polymorphism. Where Behaviours dispatch based on which module you pass, Protocols dispatch based on what type of data you pass. You'll implement a protocol for a built-in type and for your own struct, and plug into Elixir's `to_string` system so your types work inside string interpolation.
+
+### Step 14 — Ecto Changesets
+
+Ecto is Elixir's data mapping and query library. Even if you're not using a database, its changeset system is the standard way to validate and transform incoming data — from a web form, an API, or anywhere else. You'll define a schema, cast raw input through it, and get back either a valid struct or a detailed list of errors.
+
+### Step 15 — Streams
+
+`Enum` loads everything into memory at once. `Stream` is the lazy alternative — it only processes each element when you actually ask for it. This makes it possible to work with very large files, infinite sequences, or pipelines where you want to compose transformations without paying for them upfront.
+
+### Step 16 — Macros & `use`
+
+Macros let you write code that generates code. They're how `use GenServer`, `use Phoenix.Controller`, and similar constructs work — they inject boilerplate into your module at compile time. This lesson lifts the lid on that mechanism so you understand what's happening when you type `use SomeModule`.
+
+---
+
+## Useful Commands
 
 ```bash
-mix check        # run Dialyzer static analysis
-mix test         # run tests
+mix setup        # install dependencies (run once after cloning)
+mix check        # run Dialyzer — catches type errors before runtime
+iex -S mix       # open an interactive Elixir shell with your project loaded
 ```
 
-## Project Structure
+`iex` (Interactive Elixir) is excellent for experimenting. You can call any function from your lesson files directly and see the result immediately. Try it often.
+
+---
+
+## Project Layout
 
 ```
 lib/
-  lessons/           # one file per lesson — you type these
+  lessons/           # one file per lesson — this is where you work
   mix/tasks/
-    run_lesson.ex    # custom Mix task that dispatches to lesson modules
-mix.exs              # Mix aliases for short-form lesson commands
-CLAUDE.md            # detailed notes for AI-assisted learning sessions
+    run_lesson.ex    # the Mix task that knows how to run each lesson
+mix.exs              # project config — also defines the short `mix <lesson>` commands
 ```
 
-## Tips
+You don't need to touch anything outside `lib/lessons/` while working through the lessons.
 
-- If a lesson file doesn't exist yet, create it and add the module skeleton before typing the snippets.
-- Use `IO.inspect/2` liberally — label everything so output is easy to read.
-- `iex -S mix` drops you into an interactive shell with your project loaded. Great for experimenting.
-- Dialyzer (`mix check`) will catch type errors before runtime — run it after completing a lesson.
+---
+
+## Tips That Actually Help
+
+**Type, don't paste.** Your fingers learning the syntax is half the point. Muscle memory is real.
+
+**Break things on purpose.** Once a snippet works, change something — remove a clause, swap a type, rename a variable. Seeing what breaks and why is often more instructive than seeing it work.
+
+**Use `IO.inspect/2` everywhere.** Stick `|> IO.inspect(label: "after step 3")` in the middle of any pipeline to see exactly what's flowing through at that point.
+
+**Read the error messages.** Elixir's compiler errors are unusually helpful. They often tell you not just what's wrong but what you probably meant to write instead.
+
+**Don't skip lessons.** The topics build on each other. Supervisors are confusing without Processes. GenServer makes no sense without understanding message passing first.

@@ -32,7 +32,7 @@ defmodule ElixirBasics.MixProject do
     [
       setup: ["deps.get"],
       check: ["dialyzer"],
-      start: ["ecto"],
+      start: ["inprogress"],
       basics: ["run_lesson basics"],
       functions: ["run_lesson functions"],
       control_flow: ["run_lesson control_flow"],
@@ -46,7 +46,8 @@ defmodule ElixirBasics.MixProject do
       behaviours: ["run_lesson behaviours"],
       application_otp: ["run_lesson application_otp"],
       protocols: ["run_lesson protocols"],
-      ecto: ["run_lesson ecto"]
+      ecto: ["run_lesson ecto"],
+      inprogress: ["run_lesson inprogress"]
     ]
   end
 end
